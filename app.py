@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request
 import requests
 import re
+import os
 
 app = Flask(__name__)
 
@@ -26,5 +27,7 @@ def index():
         token = extract_token(cookie)
     return render_template("index.html", token=token)
 
+
 if __name__ == "__main__":
-    app.run(debug=True, port=10000)
+    port = int(os.environ.get("PORT", 10000))  # default for local, dynamic for Render
+    app.run(host="0.0.0.0", port=port)
